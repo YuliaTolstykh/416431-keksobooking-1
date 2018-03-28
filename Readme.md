@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юлия Толстых](https://up.htmlacademy.ru/javascript/13/user/416431).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Лепёшкин](https://up.htmlacademy.ru/javascript/13/user/144641).
 
 ---
 
