@@ -31,7 +31,7 @@
   };
 
   var returnColor = function (input) {
-    input.removeAttribute('style', 'border-color: red');
+    input.removeAttribute('style');
   };
 
   titleInput.addEventListener('invalid', function () {
@@ -78,7 +78,7 @@
   });
 
   var syncValues = function (field1, field2) {
-    field2.options[field1.selectedIndex].selected = true;
+    field2.value = field1.value;
   };
 
   var syncValueWithMin = function (fields1, fields2, values1, values2) {
@@ -95,13 +95,13 @@
 
   var syncValueWithPersons = function (fields1, fields2) {
     for (var i = 0; i < fields2.length; i++) {
-      fields2.options[i].disabled = 'disabled';
+      fields2.options[i].disabled = true;
     }
     for (var j = 0; j < fields2.length; j++) {
       if (fields1.selectedIndex === j) {
         fields2.options[ACTIVE_OPTIONS[j][0]].selected = true;
         for (var n = 0; n < ACTIVE_OPTIONS[j].length; n++) {
-          fields2.options[ACTIVE_OPTIONS[j][n]].removeAttribute('disabled', 'disabled');
+          fields2.options[ACTIVE_OPTIONS[j][n]].removeAttribute('disabled');
         }
       }
     }
@@ -109,10 +109,10 @@
 
   var syncInitialValueWithPersons = function (field1, field2) {
     for (var i = 0; i < field2.length; i++) {
-      field2.options[i].disabled = 'disabled';
+      field2.options[i].disabled = true;
     }
     field1.options[INITIAL_OPTION_ROOMS].selected = true;
-    field2.options[INITIAL_OPTION_CAPACITY].removeAttribute('disabled', 'disabled');
+    field2.options[INITIAL_OPTION_CAPACITY].removeAttribute('disabled');
     field2.options[INITIAL_OPTION_CAPACITY].selected = true;
   };
 
@@ -136,7 +136,6 @@
       evt.preventDefault();
       return;
     }
-    syncValueWithPersons(selectRooms, selectCapacity);
   };
 
   var onFormReset = function () {
