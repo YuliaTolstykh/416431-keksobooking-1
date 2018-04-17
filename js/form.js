@@ -125,15 +125,17 @@
   var checkForm = function (evt) {
     if (titleInput.value.length < MIN_LENGTH_TITLE || titleInput.value.length > MAX_LENGTH_TITLE) {
       changeColor(titleInput);
+      evt.preventDefault();
     }
     if (priceInput.min < MIN_PRICE || priceInput.max > MAX_PRICE || priceInput.type !== 'number' || priceInput.value === '') {
       changeColor(priceInput);
+      evt.preventDefault();
     }
     if (addressInput.value === '' || addressInput.value === 'undefined') {
       changeColor(addressInput);
+      evt.preventDefault();
       return;
     }
-    evt.preventDefault();
     syncValueWithPersons(selectRooms, selectCapacity);
   };
 
