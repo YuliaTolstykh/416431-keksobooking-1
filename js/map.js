@@ -160,10 +160,11 @@ var getStartCoords = function (element) {
   var startCoords = element.getBoundingClientRect();
   var positionElement = 'x: ' + Math.round(startCoords.x) + ', ' + 'y: ' + Math.round(startCoords.y);
   var addressInput = document.getElementById('address');
-  addressInput.disabled = 'disabled';
   addressInput.value = positionElement;
+  return addressInput.value;
 };
 
+window.startCoordsPinMain = getStartCoords(pinMain);
 addDisabled(formFieldsets);
 addDisabled(formSelect);
 getStartCoords(pinMain);
