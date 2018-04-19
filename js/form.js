@@ -140,8 +140,10 @@
 
   var onFormReset = function () {
     syncInitialValueWithPersons(selectRooms, selectCapacity);
-    addressInput.setAttribute('value', window.startCoordsPinMain); // Вопрос: Почему строки 141 и 142 не равноценны? 141 -работает, 142 - нет.
+    addressInput.setAttribute('value', window.pinMainState.initialState.addressValue); // Вопрос: Почему строки эта и следующая не равноценны? эта -работает, следующая - нет.
     // addressInput.value = window.startCoordsPinMain;
+    var pinMain = document.querySelector('.map__pin--main');
+    pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
   };
 
   form.addEventListener('reset', onFormReset);
