@@ -7,7 +7,8 @@
   var map = document.querySelector('.map');
   var pinMain = document.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
-  var ads = window.createData();
+  // var ads = window.createData();
+  var ads;
   var formFieldsets = document.querySelectorAll('fieldset');
   var formSelect = document.querySelectorAll('.map__filter');
 
@@ -29,14 +30,17 @@
   addDisabled(formSelect);
 
   var onPinMainMouseup = function () {
-    map.classList.remove('map--faded');
-    form.classList.remove('ad-form--disabled');
-    var pinAd = document.querySelector('.map__pin--main');
-    var newMap = window.putPin(pinAd, ads);
-    removeDisabled(formFieldsets);
-    removeDisabled(formSelect);
-    pinMain.removeEventListener('mouseup', onPinMainMouseup);
-    newMap.addEventListener('click', onPinClick);
+    ads = window.initialAds;
+    if (ads) {
+      map.classList.remove('map--faded');
+      form.classList.remove('ad-form--disabled');
+      var pinAd = document.querySelector('.map__pin--main');
+      var newMap = window.putPin(pinAd, ads);
+      removeDisabled(formFieldsets);
+      removeDisabled(formSelect);
+      pinMain.removeEventListener('mouseup', onPinMainMouseup);
+      newMap.addEventListener('click', onPinClick);
+    }
   };
 
   var checkKeyCode = function (evt) {

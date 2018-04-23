@@ -122,7 +122,7 @@
   window.synchronizeFields(selectType, priceInput, MIN_PRICES_PER_NIGHT, APARTMENT_TYPES, syncValueWithMin);
   window.synchronizeFields(selectRooms, selectCapacity, '', '', syncValueWithPersons);
 
-  var checkForm = function (evt) {
+  window.checkForm = function (evt, cb) {
     if (titleInput.value.length < MIN_LENGTH_TITLE || titleInput.value.length > MAX_LENGTH_TITLE) {
       changeColor(titleInput);
       evt.preventDefault();
@@ -136,16 +136,16 @@
       evt.preventDefault();
       return;
     }
+    evt.preventDefault();
+    cb();
   };
 
   var onFormReset = function () {
     syncInitialValueWithPersons(selectRooms, selectCapacity);
-    addressInput.setAttribute('value', window.pinMainState.initialState.addressValue); // Вопрос: Почему строки эта и следующая не равноценны? эта -работает, следующая - нет.
-    // addressInput.value = window.startCoordsPinMain;
+    addressInput.setAttribute('value', window.pinMainState.initialState.addressValue);
     var pinMain = document.querySelector('.map__pin--main');
     pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
   };
 
   form.addEventListener('reset', onFormReset);
-  form.addEventListener('submit', checkForm);
 })();
