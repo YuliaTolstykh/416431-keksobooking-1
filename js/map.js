@@ -7,7 +7,6 @@
   var map = document.querySelector('.map');
   var pinMain = document.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
-  // var ads = window.createData();
   var ads;
   var formFieldsets = document.querySelectorAll('fieldset');
   var formSelect = document.querySelectorAll('.map__filter');
