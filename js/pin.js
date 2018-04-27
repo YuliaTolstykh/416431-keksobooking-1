@@ -19,10 +19,11 @@
     return similarAd;
   };
 
-  window.putPin = function (pin, ads) {
+  window.putPin = function (pin, ads, number) {
     var fragment = document.createDocumentFragment();
-    for (var j = 0; j < ads.length; j++) {
-      fragment.appendChild(locatePin(ads[j], pin));
+    var takePart = ads.length >= number ? number - 1 : ads.length - 1;
+    for (var i = 0; i <= takePart; i++) {
+      fragment.appendChild(locatePin(ads[i], pin));
     }
     pin.parentElement.appendChild(fragment);
     return pin.parentElement;
