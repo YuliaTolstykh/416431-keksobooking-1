@@ -4,6 +4,7 @@
   var WIDTH_MARK_MAP = 31;
   var HEIGHT_MARK_MAP = 84;
   var CORRECTIVE_OFFSET = 100;
+  var HEIGHT_PIN = 40;
 
   var locatePin = function (ad, pin) {
     var similarAd = pin.cloneNode(true);
@@ -12,6 +13,7 @@
     similarAd.removeChild(svg);
     var avatar = similarAd.querySelector('img');
     avatar.src = ad.author.avatar;
+    avatar.height = HEIGHT_PIN;
     var positionX = ad.location.x - WIDTH_MARK_MAP - CORRECTIVE_OFFSET;
     var positionY = ad.location.y + HEIGHT_MARK_MAP - CORRECTIVE_OFFSET;
     var position = 'left: ' + positionX + 'px; top: ' + positionY + 'px;';

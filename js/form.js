@@ -15,15 +15,14 @@
   ];
   var INITIAL_OPTION_ROOMS = 0;
   var INITIAL_OPTION_CAPACITY = 2;
-  var form = document.querySelector('.ad-form');
-  var titleInput = form.elements.title;
-  var addressInput = form.elements.address;
-  var priceInput = form.elements.price;
-  var selectTimein = form.elements.timein;
-  var selectTimeout = form.elements.timeout;
-  var selectRooms = form.elements.rooms;
-  var selectCapacity = form.elements.capacity;
-  var selectType = form.elements.type;
+  var titleInput = window.util.form.elements.title;
+  var addressInput = window.util.form.elements.address;
+  var priceInput = window.util.form.elements.price;
+  var selectTimein = window.util.form.elements.timein;
+  var selectTimeout = window.util.form.elements.timeout;
+  var selectRooms = window.util.form.elements.rooms;
+  var selectCapacity = window.util.form.elements.capacity;
+  var selectType = window.util.form.elements.type;
   var minPriceMessage = 'квартиры 1000';
 
   var changeColor = function (input) {
@@ -143,9 +142,8 @@
   var onFormReset = function () {
     syncInitialValueWithPersons(selectRooms, selectCapacity);
     addressInput.setAttribute('value', window.pinMainState.initialState.addressValue);
-    var pinMain = document.querySelector('.map__pin--main');
-    pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
+    window.util.pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
   };
 
-  form.addEventListener('reset', onFormReset);
+  window.util.form.addEventListener('reset', onFormReset);
 })();

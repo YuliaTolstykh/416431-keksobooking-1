@@ -34,10 +34,28 @@
     adsElement.querySelector('.popup__type').textContent = offerType[arr.offer.type].ru;
     adsElement.querySelector('.popup__text--capacity').textContent = arr.offer.rooms + ' для ' + arr.offer.guests + ' гостей';
     adsElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + arr.offer.checkin + ', выезд до ' + arr.offer.checkout;
-    adsElement.querySelector('.popup__features').innerHTML = getTextHTML(arr.offer.features).join('');
     adsElement.querySelector('.popup__description').textContent = arr.offer.description;
     adsElement.querySelector('.popup__avatar').src = arr.author.avatar;
-    adsElement.querySelector('.popup__photo').src = arr.offer.photos[0];
+
+    var checkData = function (data, cb, className) {
+      if (data.length !== 0) {
+        cb();
+      } else {
+        var node = adsElement.querySelector(className);
+        node.parentNode.removeChild(node);
+      }
+    };
+
+    var getFeatures = function () {
+      adsElement.querySelector('.popup__features').innerHTML = getTextHTML(arr.offer.features).join('');
+    };
+
+    var getPhotos = function () {
+      adsElement.querySelector('.popup__photo').src = arr.offer.photos[0];
+    };
+
+    checkData(arr.offer.features, getFeatures, '.popup__features');
+    checkData(arr.offer.photos, getPhotos, '.popup__photos');
     return adsElement;
   };
 

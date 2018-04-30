@@ -1,13 +1,10 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
   var SPACEBAR_KEYCODE = 32;
   var NUMBER_SHOW_PIN = 5;
   var map = document.querySelector('.map');
-  var pinMain = document.querySelector('.map__pin--main');
-  var form = document.querySelector('.ad-form');
   var ads;
   var formFieldsets = document.querySelectorAll('fieldset');
   var formSelect = document.querySelectorAll('.map__filter');
@@ -41,21 +38,20 @@
       item.remove();
     });
     ads = window.filterPin();
-    window.putPin(pinMain, window.filterPin(), NUMBER_SHOW_PIN).addEventListener('click', onPinClick);
+    window.putPin(window.util.pinMain, window.filterPin(), NUMBER_SHOW_PIN).addEventListener('click', onPinClick);
   };
 
   var onPinMainMouseup = function () {
     ads = window.initialAds;
     if (ads) {
       map.classList.remove('map--faded');
-      form.classList.remove('ad-form--disabled');
-      var newMap = window.putPin(pinMain, ads, NUMBER_SHOW_PIN);
+      window.util.form.classList.remove('ad-form--disabled');
+      var newMap = window.putPin(window.util.pinMain, ads, NUMBER_SHOW_PIN);
       removeDisabled(formFieldsets);
       removeDisabled(formSelect);
-      pinMain.removeEventListener('mouseup', onPinMainMouseup);
+      window.util.pinMain.removeEventListener('mouseup', onPinMainMouseup);
       newMap.addEventListener('click', onPinClick);
-      var formFilter = document.querySelector('.map__filters');
-      formFilter.addEventListener('change', function () {
+      window.util.formFilter.addEventListener('change', function () {
         window.debounce(onFilterChange);
       });
     }
@@ -72,7 +68,7 @@
   var onPinMainKeydown = function (evt) {
     if (checkKeyCode(evt)) {
       onPinMainMouseup();
-      pinMain.removeEventListener('keydown', onPinMainKeydown);
+      window.util.pinMain.removeEventListener('keydown', onPinMainKeydown);
     }
   };
 
@@ -101,7 +97,7 @@
   };
 
   var onPopupKeydown = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       removePinActive();
       removePopup();
       evt.stopPropagation();
@@ -138,7 +134,7 @@
     }
   };
 
-  pinMain.addEventListener('mousedown', window.pinMainState.onPinMainMousedown);
-  pinMain.addEventListener('keydown', onPinMainKeydown);
-  pinMain.addEventListener('mouseup', onPinMainMouseup);
+  window.util.pinMain.addEventListener('mousedown', window.pinMainState.onPinMainMousedown);
+  window.util.pinMain.addEventListener('keydown', onPinMainKeydown);
+  window.util.pinMain.addEventListener('mouseup', onPinMainMouseup);
 })();
