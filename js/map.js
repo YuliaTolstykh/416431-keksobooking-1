@@ -4,7 +4,7 @@
   var ENTER_KEYCODE = 13;
   var SPACEBAR_KEYCODE = 32;
   var NUMBER_SHOW_PIN = 5;
-  var map = document.querySelector('.map');
+  var map = window.util.map;
   var ads;
   var formFieldsets = document.querySelectorAll('fieldset');
   var formSelect = document.querySelectorAll('.map__filter');
@@ -28,7 +28,7 @@
 
   var onFilterChange = function () {
     if (map.querySelector('.popup')) {
-      removePopup();
+      window.util.removePopup();
     }
     var mapPins = [];
     var mapPinElements = document.querySelectorAll('.map__pin');
@@ -73,8 +73,8 @@
   };
 
   var onPinClick = function (evt) {
-    removePinActive();
-    removePopup();
+    window.util.removePinActive();
+    window.util.removePopup();
     var target = evt.target;
     var actualEvent;
     var handler = function () {
@@ -98,8 +98,8 @@
 
   var onPopupKeydown = function (evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
-      removePinActive();
-      removePopup();
+      window.util.removePinActive();
+      window.util.removePopup();
       evt.stopPropagation();
       document.removeEventListener('keydown', onPopupKeydown);
     }
@@ -111,26 +111,12 @@
       window.showCard(ads[n - 1]);
       var popupClose = document.querySelector('.popup__close');
       var onPopupCloseClick = function () {
-        removePinActive();
-        removePopup();
+        window.util.removePinActive();
+        window.util.removePopup();
         popupClose.removeEventListener('click', onPopupCloseClick);
       };
       document.addEventListener('keydown', onPopupKeydown);
       popupClose.addEventListener('click', onPopupCloseClick);
-    }
-  };
-
-  var removePinActive = function () {
-    var activePin = map.querySelector('.map__pin--active');
-    if (activePin) {
-      activePin.classList.remove('map__pin--active');
-    }
-  };
-
-  var removePopup = function () {
-    var popup = map.querySelector('.popup');
-    if (popup) {
-      map.removeChild(popup);
     }
   };
 
