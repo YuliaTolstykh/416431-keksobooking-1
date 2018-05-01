@@ -1,11 +1,9 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = 27;
   var ERROR_TOP_INDENT = 200;
   var ERROR_INDENT = 5;
   var ERROR_COLOR = '#f0f0ea;';
-  var form = document.querySelector('.ad-form');
 
   var drawMessageWindow = function (color, message, indentTop, indent, parentDiv) {
     var div = document.createElement('div');
@@ -25,7 +23,7 @@
       removeDiv(div);
     };
     var onDivKeydown = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
         removeDiv(div);
       }
     };
@@ -44,14 +42,27 @@
   };
 
   var onSave = function () {
-    form.reset();
+    window.util.form.reset();
   };
 
   var sendForm = function () {
-    window.backend.save(new FormData(form), onSave, onError);
+    window.backend.save(new FormData(window.util.form), onSave, onError);
+    var message = document.querySelector('.success');
+    message.classList.remove('hidden');
+    document.querySelector('.ad-form__submit').blur();
+    var onBodyKeydown = function () {
+      message.classList.add('hidden');
+      document.body.removeEventListener('keydown', onBodyKeydown);
+    };
+    var onBodyClick = function () {
+      message.classList.add('hidden');
+      document.body.removeEventListener('click', onBodyClick);
+    };
+    document.body.addEventListener('keydown', onBodyKeydown);
+    document.body.addEventListener('click', onBodyClick);
   };
 
-  form.addEventListener('submit', function (evt) {
+  window.util.form.addEventListener('submit', function (evt) {
     window.checkForm(evt, sendForm);
   });
 
