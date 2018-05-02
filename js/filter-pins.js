@@ -53,7 +53,7 @@
     && getFeaturesAds(ads);
   };
 
-  window.filterPin = function () {
+  window.filterPins = function () {
     var dataAds = window.initialAds.filter(getFilter);
     return dataAds;
   };

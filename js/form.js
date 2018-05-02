@@ -143,6 +143,10 @@
     syncInitialValueWithPersons(selectRooms, selectCapacity);
     addressInput.setAttribute('value', window.pinMainState.initialState.addressValue);
     window.util.pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
+    window.util.removePinActive();
+    window.util.removePopup();
+    window.util.formFilter.reset();
+    window.onFilterChange();
   };
 
   window.util.form.addEventListener('reset', onFormReset);

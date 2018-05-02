@@ -50,6 +50,8 @@
     var message = document.querySelector('.success');
     message.classList.remove('hidden');
     document.querySelector('.ad-form__submit').blur();
+    window.util.removePinActive();
+    window.util.removePopup();
     var onBodyKeydown = function () {
       message.classList.add('hidden');
       document.body.removeEventListener('keydown', onBodyKeydown);
