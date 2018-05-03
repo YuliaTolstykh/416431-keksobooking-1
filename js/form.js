@@ -145,8 +145,11 @@
     window.util.pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
     window.util.removePinActive();
     window.util.removePopup();
+    returnColor(titleInput);
+    returnColor(priceInput);
     window.util.formFilter.reset();
     window.onFilterChange();
+    window.removePhoto();
   };
 
   window.util.form.addEventListener('reset', onFormReset);
