@@ -1,23 +1,37 @@
 'use strict';
 
 (function () {
+  var pinMain = document.querySelector('.map__pin--main');
+  var form = document.querySelector('.ad-form');
+  var formFilter = document.querySelector('.map__filters');
+  var map = document.querySelector('.map');
+
   window.util = {
     ESC_KEYCODE: 27,
-    pinMain: document.querySelector('.map__pin--main'),
-    form: document.querySelector('.ad-form'),
-    formFilter: document.querySelector('.map__filters'),
-    map: document.querySelector('.map'),
+    pinMain: pinMain,
+    form: form,
+    formFilter: formFilter,
+    map: map,
     removePinActive: function () {
-      var activePin = window.util.map.querySelector('.map__pin--active');
+      var activePin = map.querySelector('.map__pin--active');
       if (activePin) {
         activePin.classList.remove('map__pin--active');
       }
     },
     removePopup: function () {
-      var popup = window.util.map.querySelector('.popup');
+      var popup = map.querySelector('.popup');
       if (popup) {
-        window.util.map.removeChild(popup);
+        map.removeChild(popup);
       }
+    },
+    removePin: function () {
+      var mapPins = [];
+      var mapPinElements = map.querySelectorAll('.map__pin');
+      mapPins = [].slice.call(mapPinElements);
+      mapPins.shift();
+      mapPins.forEach(function (item) {
+        item.remove();
+      });
     }
   };
 })();

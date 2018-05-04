@@ -4,6 +4,7 @@
   var ENTER_KEYCODE = 13;
   var SPACEBAR_KEYCODE = 32;
   var NUMBER_SHOW_PIN = 5;
+  var ACTIVATION_DELAY = 3000;
   var map = window.util.map;
   var ads;
   var formFieldsets = document.querySelectorAll('fieldset');
@@ -31,20 +32,19 @@
     }
   };
 
-  var onPinMainMouseup = function () {
-    ads = window.initialAds;
-    if (ads) {
-      map.classList.remove('map--faded');
-      window.util.form.classList.remove('ad-form--disabled');
-      var newMap = window.putPin(window.util.pinMain, ads, NUMBER_SHOW_PIN);
-      removeDisabled(formFieldsets);
-      removeDisabled(formSelect);
-      window.util.pinMain.removeEventListener('mouseup', onPinMainMouseup);
-      newMap.addEventListener('click', onPinClick);
-      window.util.formFilter.addEventListener('change', function () {
-        window.debounce(window.onFilterChange);
-      });
-    }
+  window.getInactiveState = function () {
+    addDisabled(formFieldsets);
+    addDisabled(formSelect);
+    map.classList.add('map--faded');
+    window.util.form.classList.add('ad-form--disabled');
+    setTimeout(getActiveState, ACTIVATION_DELAY);
+  };
+
+  var getActiveState = function () {
+    map.classList.remove('map--faded');
+    window.util.form.classList.remove('ad-form--disabled');
+    removeDisabled(formFieldsets);
+    removeDisabled(formSelect);
   };
 
   var onPinMainKeydown = function (evt) {
@@ -57,24 +57,20 @@
   var onPinClick = function (evt) {
     window.util.removePinActive();
     window.util.removePopup();
-    var target = evt.target;
+    var targetElement = evt.target;
     var actualEvent;
     var handler = function () {
       var mapPinElements = document.querySelectorAll('.map__pin');
       var mapPins = [].slice.call(mapPinElements);
       setPinActive(mapPins, mapPins.indexOf(actualEvent));
     };
-    switch (target.tagName) {
-      case 'IMG':
-        actualEvent = target.parentElement;
-        handler();
-        break;
-      case 'BUTTON':
-        actualEvent = target;
-        handler();
-        break;
-      default:
-        break;
+    if (targetElement.tagName === 'IMG') {
+      actualEvent = targetElement.parentElement;
+      handler();
+    }
+    if (targetElement.tagName === 'BUTTON') {
+      actualEvent = targetElement;
+      handler();
     }
   };
 
@@ -102,24 +98,31 @@
     }
   };
 
-  window.onFilterChange = function () {
+  var onFilterChange = function () {
     if (map.querySelector('.popup')) {
       window.util.removePopup();
     }
-    var mapPins = [];
-    var mapPinElements = document.querySelectorAll('.map__pin');
-    mapPins = [].slice.call(mapPinElements);
-    mapPins.shift();
-    mapPins.forEach(function (item) {
-      item.remove();
-    });
+    window.util.removePin();
     ads = window.filterPins();
     window.putPin(window.util.pinMain, ads, NUMBER_SHOW_PIN).addEventListener('click', onPinClick);
   };
 
+  var onPinMainMouseup = function () {
+    window.util.pinMain.removeEventListener('mouseup', onPinMainMouseup);
+    window.util.formFilter.addEventListener('change', function () {
+      window.debounce(onFilterChange);
+    });
+  };
+
+  var onPinMainMousedown = function (evt) {
+    getActiveState();
+    window.pinMainState.onPinMainMousedown(evt);
+  };
+
   addDisabled(formFieldsets);
   addDisabled(formSelect);
-  window.util.pinMain.addEventListener('mousedown', window.pinMainState.onPinMainMousedown);
+
+  window.util.pinMain.addEventListener('mousedown', onPinMainMousedown);
   window.util.pinMain.addEventListener('keydown', onPinMainKeydown);
   window.util.pinMain.addEventListener('mouseup', onPinMainMouseup);
 })();

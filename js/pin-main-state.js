@@ -30,6 +30,7 @@
         x: evt.clientX,
         y: evt.clientY
       };
+
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
         var shift = {
@@ -47,15 +48,17 @@
         if (arrowPositionX >= MIN_X && arrowPositionX <= MAX_X && arrowPositionY >= MIN_Y && arrowPositionY <= MAX_Y) {
           window.util.pinMain.style.left = (pinMainShiftedX) + 'px';
           window.util.pinMain.style.top = (pinMainShiftedY) + 'px';
-          var pinMainPosition = 'x: ' + arrowPositionX + ', ' + 'y: ' + arrowPositionY;
+          var pinMainPosition = arrowPositionX + ', ' + arrowPositionY;
           addressInput.value = pinMainPosition;
         }
       };
+
       var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
       };
+
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     }
