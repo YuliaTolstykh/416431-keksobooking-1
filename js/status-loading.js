@@ -3,7 +3,7 @@
 (function () {
   var ERROR_TOP_INDENT = 200;
   var ERROR_INDENT = 5;
-  var ERROR_COLOR = '#f0f0ea;';
+  var ERROR_COLOR = '#f0f0ea';
 
   var drawMessageWindow = function (color, message, indentTop, indent, parentDiv) {
     var div = document.createElement('div');
@@ -68,5 +68,10 @@
     window.checkForm(evt, sendForm);
   });
 
-  window.backend.load(onLoad, onError);
+  var onPinMainMouseup = function () {
+    window.backend.load(onLoad, onError);
+    window.util.pinMain.removeEventListener('mouseup', onPinMainMouseup);
+  };
+
+  window.util.pinMain.addEventListener('mouseup', onPinMainMouseup);
 }());

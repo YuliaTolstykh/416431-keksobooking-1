@@ -148,8 +148,10 @@
     returnColor(titleInput);
     returnColor(priceInput);
     window.util.formFilter.reset();
-    window.onFilterChange();
+    // window.onFilterChange();
     window.removePhoto();
+    window.util.removePin();
+    window.getInactiveState();
   };
 
   window.util.form.addEventListener('reset', onFormReset);
