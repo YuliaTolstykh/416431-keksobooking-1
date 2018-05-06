@@ -54,7 +54,7 @@
   };
 
   window.filterPins = function () {
-    var dataAds = window.initialAds.filter(getFilter);
+    var dataAds = window.map.initialAds.filter(getFilter);
     return dataAds;
   };
 }());

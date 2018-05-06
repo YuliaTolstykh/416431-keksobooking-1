@@ -15,6 +15,7 @@
   ];
   var INITIAL_OPTION_ROOMS = 0;
   var INITIAL_OPTION_CAPACITY = 2;
+  var DELAY = 100;
   var titleInput = window.util.form.elements.title;
   var addressInput = window.util.form.elements.address;
   var priceInput = window.util.form.elements.price;
@@ -100,7 +101,7 @@
       if (fields1.selectedIndex === j) {
         fields2.options[ACTIVE_OPTIONS[j][0]].selected = true;
         for (var n = 0; n < ACTIVE_OPTIONS[j].length; n++) {
-          fields2.options[ACTIVE_OPTIONS[j][n]].removeAttribute('disabled');
+          fields2.options[ACTIVE_OPTIONS[j][n]].disabled = false;
         }
       }
     }
@@ -139,20 +140,29 @@
     cb();
   };
 
-  var onFormReset = function () {
+  var delayAction = function () {
+    setTimeout(function () {
+      addressInput.value = window.pinMainState.initialState.addressValue;
+    }, DELAY);
+  };
+
+  var onFormReset = function (cb) {
     syncInitialValueWithPersons(selectRooms, selectCapacity);
-    addressInput.setAttribute('value', window.pinMainState.initialState.addressValue);
     window.util.pinMain.style = 'top: ' + window.pinMainState.initialState.positionTop + '; left: ' + window.pinMainState.initialState.positionLeft + ';';
     window.util.removePinActive();
     window.util.removePopup();
     returnColor(titleInput);
     returnColor(priceInput);
     window.util.formFilter.reset();
-    // window.onFilterChange();
-    window.removePhoto();
+    window.photo.removePhoto();
     window.util.removePin();
-    window.getInactiveState();
+    window.map.getInactiveStatePage();
+    cb();
   };
 
-  window.util.form.addEventListener('reset', onFormReset);
+  window.util.form.addEventListener('reset', function () {
+    onFormReset(function () {
+      delayAction();
+    });
+  });
 })();

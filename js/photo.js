@@ -53,12 +53,16 @@
   avatarChooser.addEventListener('change', onAvatarChooserChange);
   photoChooser.addEventListener('change', onPhotoChooserChange);
 
-  window.removePhoto = function () {
+  var removePhoto = function () {
     avatarPreview.src = AVATAR_PREVIEW_SRC;
     var imgs = photoPreview.querySelectorAll('img');
     imgs.forEach(function (it) {
       photoPreview.removeChild(it);
     });
     divNamePhoto[1].classList.add('ad-form__photo');
+  };
+
+  window.photo = {
+    removePhoto: removePhoto
   };
 })();

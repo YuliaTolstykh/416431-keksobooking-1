@@ -21,13 +21,15 @@
     return similarAd;
   };
 
-  window.putPin = function (pin, ads, number) {
+  var createPin = function (pin, ads) {
     var fragment = document.createDocumentFragment();
-    var takePart = ads.length >= number ? number - 1 : ads.length - 1;
-    for (var i = 0; i <= takePart; i++) {
-      fragment.appendChild(locatePin(ads[i], pin));
-    }
+    ads.forEach(function (pinElement) {
+      fragment.appendChild(locatePin(pinElement, pin));
+    });
     pin.parentElement.appendChild(fragment);
-    return pin.parentElement;
+  };
+
+  window.pin = {
+    createPin: createPin
   };
 })();
