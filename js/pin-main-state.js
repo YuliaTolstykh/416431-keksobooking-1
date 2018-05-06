@@ -8,7 +8,7 @@
   var addressInput = window.util.form.elements.address;
 
   var getInitialPosition = function (element) {
-    addressInput.value = 'x: ' + element.style.left.slice(0, -2) + ', ' + 'y: ' + element.style.top.slice(0, -2);
+    addressInput.value = element.style.left.slice(0, -2) + ', ' + element.style.top.slice(0, -2);
     return {
       value: addressInput.value,
       left: element.style.left,

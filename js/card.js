@@ -60,9 +60,8 @@
   };
 
   window.showCard = function (ad) {
-    var map = document.querySelector('.map');
-    map.appendChild(createAdCard(ad));
-    var card = map.querySelector('.map__card');
+    window.util.map.appendChild(createAdCard(ad));
+    var card = window.util.map.querySelector('.map__card');
     var photo = [];
     for (var k = 1; k < ad.offer.photos.length; k++) {
       photo[k] = card.querySelector('.popup__photo').cloneNode(true);

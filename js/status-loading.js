@@ -4,6 +4,7 @@
   var ERROR_TOP_INDENT = 200;
   var ERROR_INDENT = 5;
   var ERROR_COLOR = '#f0f0ea';
+  var TIME_SHOW_MESSAGE = 1500;
 
   var drawMessageWindow = function (color, message, indentTop, indent, parentDiv) {
     var div = document.createElement('div');
@@ -32,10 +33,6 @@
     return div;
   };
 
-  var onLoad = function (data) {
-    window.initialAds = data;
-  };
-
   var onError = function (message) {
     var div = drawMessageWindow(ERROR_COLOR, message, ERROR_TOP_INDENT, ERROR_INDENT, document.body);
     document.body.insertAdjacentElement('afterbegin', div);
@@ -52,26 +49,27 @@
     document.querySelector('.ad-form__submit').blur();
     window.util.removePinActive();
     window.util.removePopup();
-    var onBodyKeydown = function () {
+    var deleteMessage = function () {
       message.classList.add('hidden');
+    };
+    var onBodyKeydown = function () {
+      deleteMessage();
       document.body.removeEventListener('keydown', onBodyKeydown);
     };
     var onBodyClick = function () {
-      message.classList.add('hidden');
+      deleteMessage();
       document.body.removeEventListener('click', onBodyClick);
     };
     document.body.addEventListener('keydown', onBodyKeydown);
     document.body.addEventListener('click', onBodyClick);
+    setTimeout(deleteMessage, TIME_SHOW_MESSAGE);
   };
 
   window.util.form.addEventListener('submit', function (evt) {
     window.checkForm(evt, sendForm);
   });
 
-  var onPinMainMouseup = function () {
-    window.backend.load(onLoad, onError);
-    window.util.pinMain.removeEventListener('mouseup', onPinMainMouseup);
+  window.statusLoading = {
+    onError: onError
   };
-
-  window.util.pinMain.addEventListener('mouseup', onPinMainMouseup);
 }());
