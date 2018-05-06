@@ -26,11 +26,7 @@
   };
 
   var checkKeyCode = function (evt) {
-    if (evt.keyCode === ENTER_KEYCODE || evt.keyCode === SPACEBAR_KEYCODE) {
-      return true;
-    } else {
-      return false;
-    }
+    return evt.keyCode === ENTER_KEYCODE || evt.keyCode === SPACEBAR_KEYCODE;
   };
 
   var getInactiveStatePage = function () {
@@ -54,28 +50,29 @@
 
   var getActiveStateMap = function (data) {
     ads = data;
-    window.pin.createPin(window.util.pinMain, data.slice(0, NUMBER_SHOW_PIN));
+    window.pin.create(window.util.pinMain, data.slice(0, NUMBER_SHOW_PIN));
     map.addEventListener('click', onPinClick);
   };
 
   var onPinMainKeydown = function (evt) {
     if (checkKeyCode(evt)) {
+      getActiveStatePage();
       onPinMainMouseup();
       window.util.pinMain.removeEventListener('keydown', onPinMainKeydown);
     }
   };
 
   var onPinClick = function (evt) {
-    window.util.removePinActive();
-    window.util.removePopup();
     var targetElement = evt.target;
     var actualEvent;
     var handler = function () {
+      window.util.removePinActive();
+      window.util.removePopup();
       var mapPinElements = map.querySelectorAll('.map__pin');
       var mapPins = [].slice.call(mapPinElements);
       setPinActive(mapPins, mapPins.indexOf(actualEvent));
     };
-    if (targetElement.tagName === 'IMG') {
+    if (targetElement.tagName === 'IMG' && targetElement.parentElement.tagName === 'BUTTON') {
       actualEvent = targetElement.parentElement;
       handler();
     }

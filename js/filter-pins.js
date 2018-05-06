@@ -46,10 +46,11 @@
   };
 
   var getFilter = function (ads) {
-    return ((window.util.formFilter.elements[FILTER_TYPE].value === OPTION_ANY) ? ads : ads.offer.type === window.util.formFilter.elements[FILTER_TYPE].value)
-    && ((window.util.formFilter.elements[FILTER_PRICE].value === OPTION_ANY) ? ads : offerPrice(ads.offer.price) === window.util.formFilter.elements[FILTER_PRICE].value)
-    && ((window.util.formFilter.elements[FILTER_ROOMS].value === OPTION_ANY) ? ads : ads.offer.rooms === +window.util.formFilter.elements[FILTER_ROOMS].value)
-    && ((window.util.formFilter.elements[FILTER_GUESTS].value === OPTION_ANY) ? ads : ads.offer.guests === +window.util.formFilter.elements[FILTER_GUESTS].value)
+    var elements = window.util.formFilter.elements;
+    return ((elements[FILTER_TYPE].value === OPTION_ANY) ? ads : ads.offer.type === elements[FILTER_TYPE].value)
+    && ((elements[FILTER_PRICE].value === OPTION_ANY) ? ads : offerPrice(ads.offer.price) === elements[FILTER_PRICE].value)
+    && ((elements[FILTER_ROOMS].value === OPTION_ANY) ? ads : ads.offer.rooms === +elements[FILTER_ROOMS].value)
+    && ((elements[FILTER_GUESTS].value === OPTION_ANY) ? ads : ads.offer.guests === +elements[FILTER_GUESTS].value)
     && getFeaturesAds(ads);
   };
 

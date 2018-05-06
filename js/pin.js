@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var WIDTH_MARK_MAP = 31;
-  var HEIGHT_MARK_MAP = 84;
+  var WIDTH_MARK_MAP = 25;
+  var HEIGHT_MARK_MAP = 70;
   var CORRECTIVE_OFFSET = 100;
   var HEIGHT_PIN = 40;
 
@@ -30,6 +30,6 @@
   };
 
   window.pin = {
-    createPin: createPin
+    create: createPin
   };
 })();

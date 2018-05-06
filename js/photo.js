@@ -63,6 +63,6 @@
   };
 
   window.photo = {
-    removePhoto: removePhoto
+    remove: removePhoto
   };
 })();
