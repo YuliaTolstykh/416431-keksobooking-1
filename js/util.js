@@ -26,8 +26,8 @@
     },
     removePin: function () {
       var mapPins = [];
-      var mapPinElements = map.querySelectorAll('.map__pin');
-      mapPins = [].slice.call(mapPinElements);
+      var pins = map.querySelectorAll('.map__pin');
+      mapPins = [].slice.call(pins);
       mapPins.shift();
       mapPins.forEach(function (item) {
         item.remove();

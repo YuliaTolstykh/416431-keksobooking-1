@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var WIDTH_PIN_MAIN = 30;
-  var HEIGHT_PIN_MAIN = 80;
+  var WIDTH_PIN_MAIN = 32;
+  var HEIGHT_PIN_MAIN = 87;
   var MIN_X = 100;
   var MAX_X = 1035;
   var MIN_Y = 150;
@@ -10,7 +10,7 @@
   var addressInput = window.util.form.elements.address;
 
   var getInitialPosition = function (element) {
-    var y = +element.style.top.slice(0, -2) + HEIGHT_PIN_MAIN;
+    var y = +element.style.top.slice(0, -2) - HEIGHT_PIN_MAIN;
     var x = +element.style.left.slice(0, -2) - WIDTH_PIN_MAIN;
     addressInput.value = x + ', ' + y;
     return {
@@ -48,7 +48,7 @@
         var pinMainShiftedX = window.util.pinMain.offsetLeft - shift.x;
         var pinMainShiftedY = window.util.pinMain.offsetTop - shift.y;
         var arrowPositionX = pinMainShiftedX - WIDTH_PIN_MAIN;
-        var arrowPositionY = pinMainShiftedY + HEIGHT_PIN_MAIN;
+        var arrowPositionY = pinMainShiftedY - HEIGHT_PIN_MAIN;
         if (arrowPositionX >= MIN_X && arrowPositionX <= MAX_X && arrowPositionY >= MIN_Y && arrowPositionY <= MAX_Y) {
           window.util.pinMain.style.left = (pinMainShiftedX) + 'px';
           window.util.pinMain.style.top = (pinMainShiftedY) + 'px';

@@ -4,12 +4,11 @@
   var ENTER_KEYCODE = 13;
   var SPACEBAR_KEYCODE = 32;
   var NUMBER_SHOW_PIN = 5;
-  var ACTIVATION_DELAY = 2000;
   var map = window.util.map;
-  var ads;
+  var advertisements;
   var formFieldsets = document.querySelectorAll('fieldset');
   var formSelect = document.querySelectorAll('.map__filter');
-  var initialAds = [];
+  var initialAdvertisements = [];
 
   var addDisabled = function (fieldsets) {
     fieldsets.forEach(function (item) {
@@ -34,11 +33,12 @@
     addDisabled(formSelect);
     map.classList.add('map--faded');
     window.util.form.classList.add('ad-form--disabled');
-    var setDelayedFunction = function () {
+    var onPinMainMouseupAfterLoad = function () {
+      window.util.pinMain.removeEventListener('mouseup', onPinMainMouseupAfterLoad);
       getActiveStatePage();
-      getActiveStateMap(window.map.initialAds);
+      getActiveStateMap(window.map.initialAdvertisements);
     };
-    setTimeout(setDelayedFunction, ACTIVATION_DELAY);
+    window.util.pinMain.addEventListener('mouseup', onPinMainMouseupAfterLoad);
   };
 
   var getActiveStatePage = function () {
@@ -49,7 +49,7 @@
   };
 
   var getActiveStateMap = function (data) {
-    ads = data;
+    advertisements = data;
     window.pin.create(window.util.pinMain, data.slice(0, NUMBER_SHOW_PIN));
     map.addEventListener('click', onPinClick);
   };
@@ -68,8 +68,8 @@
     var handler = function () {
       window.util.removePinActive();
       window.util.removePopup();
-      var mapPinElements = map.querySelectorAll('.map__pin');
-      var mapPins = [].slice.call(mapPinElements);
+      var pins = map.querySelectorAll('.map__pin');
+      var mapPins = [].slice.call(pins);
       setPinActive(mapPins, mapPins.indexOf(actualEvent));
     };
     if (targetElement.tagName === 'IMG' && targetElement.parentElement.tagName === 'BUTTON') {
@@ -94,7 +94,7 @@
   var setPinActive = function (pins, n) {
     if (n !== 0) {
       pins[n].classList.add('map__pin--active');
-      window.showCard(ads[n - 1]);
+      window.showCard(advertisements[n - 1]);
       var popupClose = map.querySelector('.popup__close');
       var onPopupCloseClick = function (evt) {
         window.util.removePinActive();
@@ -113,21 +113,25 @@
       window.util.removePopup();
     }
     window.util.removePin();
-    ads = window.filterPins();
-    getActiveStateMap(ads);
+    advertisements = window.filterPins();
+    getActiveStateMap(advertisements);
   };
 
   var onLoad = function (data) {
-    window.map.initialAds = data;
-    getActiveStateMap(window.map.initialAds);
+    window.map.initialAdvertisements = data;
+    startActivity();
+  };
+
+  var startActivity = function () {
+    getActiveStateMap(window.map.initialAdvertisements);
+    window.util.formFilter.addEventListener('change', function () {
+      window.debounce(onFilterChange);
+    });
   };
 
   var onPinMainMouseup = function () {
     window.util.pinMain.removeEventListener('mouseup', onPinMainMouseup);
     window.backend.load(onLoad, window.statusLoading.onError);
-    window.util.formFilter.addEventListener('change', function () {
-      window.debounce(onFilterChange);
-    });
   };
 
   var onPinMainMousedown = function (evt) {
@@ -143,7 +147,7 @@
   window.util.pinMain.addEventListener('mouseup', onPinMainMouseup);
 
   window.map = {
-    initialAds: initialAds,
+    initialAdvertisements: initialAdvertisements,
     getInactiveStatePage: getInactiveStatePage
   };
 })();

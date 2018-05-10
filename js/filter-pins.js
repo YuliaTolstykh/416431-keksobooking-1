@@ -30,14 +30,14 @@
     return price;
   };
 
-  var getFeaturesAds = function (ads) {
+  var getFeaturesAdvertisements = function (dataCards) {
     var features = window.util.formFilter.querySelectorAll('input[type=checkbox]:checked');
     var truthFeatures = true;
     if (features.length === 0) {
       truthFeatures = true;
     } else {
       features.forEach(function (it) {
-        if (ads.offer.features.indexOf(it.value) === -1) {
+        if (dataCards.offer.features.indexOf(it.value) === -1) {
           truthFeatures = false;
         }
       });
@@ -45,17 +45,17 @@
     return truthFeatures;
   };
 
-  var getFilter = function (ads) {
+  var getFilter = function (dataCards) {
     var elements = window.util.formFilter.elements;
-    return ((elements[FILTER_TYPE].value === OPTION_ANY) ? ads : ads.offer.type === elements[FILTER_TYPE].value)
-    && ((elements[FILTER_PRICE].value === OPTION_ANY) ? ads : offerPrice(ads.offer.price) === elements[FILTER_PRICE].value)
-    && ((elements[FILTER_ROOMS].value === OPTION_ANY) ? ads : ads.offer.rooms === +elements[FILTER_ROOMS].value)
-    && ((elements[FILTER_GUESTS].value === OPTION_ANY) ? ads : ads.offer.guests === +elements[FILTER_GUESTS].value)
-    && getFeaturesAds(ads);
+    return ((elements[FILTER_TYPE].value === OPTION_ANY) ? dataCards : dataCards.offer.type === elements[FILTER_TYPE].value)
+    && ((elements[FILTER_PRICE].value === OPTION_ANY) ? dataCards : offerPrice(dataCards.offer.price) === elements[FILTER_PRICE].value)
+    && ((elements[FILTER_ROOMS].value === OPTION_ANY) ? dataCards : dataCards.offer.rooms === +elements[FILTER_ROOMS].value)
+    && ((elements[FILTER_GUESTS].value === OPTION_ANY) ? dataCards : dataCards.offer.guests === +elements[FILTER_GUESTS].value)
+    && getFeaturesAdvertisements(dataCards);
   };
 
   window.filterPins = function () {
-    var dataAds = window.map.initialAds.filter(getFilter);
-    return dataAds;
+    var dataAdvertisements = window.map.initialAdvertisements.filter(getFilter);
+    return dataAdvertisements;
   };
 }());
