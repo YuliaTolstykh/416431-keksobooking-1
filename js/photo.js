@@ -35,10 +35,10 @@
   var onPhotoChooserChange = function () {
     divNamePhoto[1].classList.remove('ad-form__photo');
     var cb = function () {
-      var img = document.createElement('img');
-      img.className = 'ad-form__photo';
-      img.src = reader.result;
-      photoPreview.appendChild(img);
+      var image = document.createElement('img');
+      image.className = 'ad-form__photo';
+      image.src = reader.result;
+      photoPreview.appendChild(image);
     };
     uploadFile(photoChooser, cb);
   };
@@ -55,14 +55,14 @@
 
   var removePhoto = function () {
     avatarPreview.src = AVATAR_PREVIEW_SRC;
-    var imgs = photoPreview.querySelectorAll('img');
-    imgs.forEach(function (it) {
+    var images = photoPreview.querySelectorAll('img');
+    images.forEach(function (it) {
       photoPreview.removeChild(it);
     });
     divNamePhoto[1].classList.add('ad-form__photo');
   };
 
   window.photo = {
-    removePhoto: removePhoto
+    remove: removePhoto
   };
 })();

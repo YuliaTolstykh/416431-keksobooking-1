@@ -1,35 +1,34 @@
 'use strict';
 
 (function () {
-  var WIDTH_MARK_MAP = 31;
-  var HEIGHT_MARK_MAP = 84;
-  var CORRECTIVE_OFFSET = 100;
+  var WIDTH_MARK_MAP = 25;
+  var HEIGHT_MARK_MAP = 70;
   var HEIGHT_PIN = 40;
 
-  var locatePin = function (ad, pin) {
-    var similarAd = pin.cloneNode(true);
-    similarAd.classList.remove('map__pin--main');
-    var svg = similarAd.querySelector('svg');
-    similarAd.removeChild(svg);
-    var avatar = similarAd.querySelector('img');
-    avatar.src = ad.author.avatar;
+  var locatePin = function (advertisement, pinMain) {
+    var similarAdvertisement = pinMain.cloneNode(true);
+    similarAdvertisement.classList.remove('map__pin--main');
+    var svg = similarAdvertisement.querySelector('svg');
+    similarAdvertisement.removeChild(svg);
+    var avatar = similarAdvertisement.querySelector('img');
+    avatar.src = advertisement.author.avatar;
     avatar.height = HEIGHT_PIN;
-    var positionX = ad.location.x - WIDTH_MARK_MAP - CORRECTIVE_OFFSET;
-    var positionY = ad.location.y + HEIGHT_MARK_MAP - CORRECTIVE_OFFSET;
-    var position = 'left: ' + positionX + 'px; top: ' + positionY + 'px;';
-    similarAd.style = position;
-    return similarAd;
+    var positionX = advertisement.location.x - WIDTH_MARK_MAP;
+    var positionY = advertisement.location.y - HEIGHT_MARK_MAP;
+    similarAdvertisement.style.left = positionX + 'px';
+    similarAdvertisement.style.top = positionY + 'px';
+    return similarAdvertisement;
   };
 
-  var createPin = function (pin, ads) {
+  var createPin = function (pinMain, advertisements) {
     var fragment = document.createDocumentFragment();
-    ads.forEach(function (pinElement) {
-      fragment.appendChild(locatePin(pinElement, pin));
+    advertisements.forEach(function (pin) {
+      fragment.appendChild(locatePin(pin, pinMain));
     });
-    pin.parentElement.appendChild(fragment);
+    pinMain.parentElement.appendChild(fragment);
   };
 
   window.pin = {
-    createPin: createPin
+    create: createPin
   };
 })();

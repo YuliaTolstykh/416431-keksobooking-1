@@ -154,7 +154,7 @@
     returnColor(titleInput);
     returnColor(priceInput);
     window.util.formFilter.reset();
-    window.photo.removePhoto();
+    window.photo.remove();
     window.util.removePin();
     window.map.getInactiveStatePage();
     cb();
