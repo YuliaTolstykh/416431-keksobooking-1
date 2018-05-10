@@ -6,12 +6,12 @@
   var MIN_X = 100;
   var MAX_X = 1035;
   var MIN_Y = 150;
-  var MAX_Y = 500;
+  var MAX_Y = 413;
   var addressInput = window.util.form.elements.address;
 
   var getInitialPosition = function (element) {
-    var y = +element.style.top.slice(0, -2) - HEIGHT_PIN_MAIN;
     var x = +element.style.left.slice(0, -2) - WIDTH_PIN_MAIN;
+    var y = +element.style.top.slice(0, -2) - HEIGHT_PIN_MAIN;
     addressInput.value = x + ', ' + y;
     return {
       value: addressInput.value,
